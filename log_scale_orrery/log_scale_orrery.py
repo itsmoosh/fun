@@ -62,13 +62,14 @@ num_ast = 300
 # plot the Sun at the center?
 #############################
 
-show_sun = False
+show_sun = True
 
 ###########################
 # add color to the diagram?
 ###########################
 
 colorful = True
+orbits_too = False
 
 
 # Reference direction for ephemeris longitudes is the autumnal equinox
@@ -132,14 +133,24 @@ else:
 
 planet_colors = [ mer_color, ven_color, ear_color, mar_color, jup_color, sat_color, ura_color, nep_color ]
 
-mer_orbit_color = mer_color
-ven_orbit_color = ven_color
-ear_orbit_color = ear_color
-mar_orbit_color = mar_color
-jup_orbit_color = jup_color
-sat_orbit_color = sat_color
-ura_orbit_color = ura_color
-nep_orbit_color = nep_color
+if orbits_too:
+	mer_orbit_color = mer_color
+	ven_orbit_color = ven_color
+	ear_orbit_color = ear_color
+	mar_orbit_color = mar_color
+	jup_orbit_color = jup_color
+	sat_orbit_color = sat_color
+	ura_orbit_color = ura_color
+	nep_orbit_color = nep_color
+else:
+	mer_orbit_color = planet_color
+	ven_orbit_color = planet_color
+	ear_orbit_color = planet_color
+	mar_orbit_color = planet_color
+	jup_orbit_color = planet_color
+	sat_orbit_color = planet_color
+	ura_orbit_color = planet_color
+	nep_orbit_color = planet_color
 
 
 # Source for orbital parameters: JPL Horizons ephemerides
@@ -330,10 +341,6 @@ fig = plt.gcf()
 ax = fig.gca()
 # Make it square
 ax.set_aspect('equal')
-# Plot planets
-orrery = plt.scatter( x_vals , y_vals , color=planet_colors, s=planet_size )
-# Plot asteroids
-asteroids = plt.scatter( x_ast , y_ast , color=ast_color, s=ast_size )
 
 if show_sun:
 	sun = plt.scatter( [0.0] , [0.0] , color=sun_color, s=sun_size )
@@ -407,6 +414,11 @@ if draw_orbits:
 		sat_orbit = plt.plot( sat_xs, sat_ys, linewidth=orbit_thk, color=sat_orbit_color )
 		ura_orbit = plt.plot( ura_xs, ura_ys, linewidth=orbit_thk, color=ura_orbit_color )
 		nep_orbit = plt.plot( nep_xs, nep_ys, linewidth=orbit_thk, color=nep_orbit_color )
+
+# Plot planets
+orrery = plt.scatter( x_vals , y_vals , color=planet_colors, s=planet_size, zorder=4 )
+# Plot asteroids
+asteroids = plt.scatter( x_ast , y_ast , color=ast_color, s=ast_size )
 
 # Set axes to show everything
 ax.set_xlim(-r_vals[7]*1.1, r_vals[7]*1.1)
