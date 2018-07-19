@@ -8,7 +8,7 @@ Please read the README file for more information.
 
 Author: Marshall 'Moosh' Styczinski
 
-Last updated (v1.0): July 18, 2018
+Last updated (v1.1): July 19, 2018
 """
 
 try:
@@ -64,6 +64,12 @@ num_ast = 300
 
 show_sun = False
 
+###########################
+# add color to the diagram?
+###########################
+
+colorful = True
+
 
 # Reference direction for ephemeris longitudes is the autumnal equinox
 #	("out along ascending node of instantaneous plane
@@ -93,15 +99,47 @@ else:
 	scale = log_scale*1.1
 
 
-planet_color = 'black'
-orbit_color = 'black'
-sun_color = 'black'
 ast_size = 0.5	# Asteroid size, in pt^2
 planet_size = 40.0	# Planet size, in pt^2
 sun_size = 100.0	# Sun size, in pt^2
 orbit_thk = 1.5	# Line width for orbit paths, in pt
 n_phis = 1000	# Number of angular points for orbit ellipses
 fig_size = (6,6)	# In inches
+
+planet_color = 'black'
+if colorful:
+	sun_color = 'gold'
+	mer_color = 'firebrick'
+	ven_color = 'lightcoral'
+	ear_color = 'mediumblue'
+	mar_color = 'darkorange'
+	ast_color = 'slategray'
+	jup_color = 'sienna'
+	sat_color = 'goldenrod'
+	ura_color = 'darkturquoise'
+	nep_color = 'blue'
+else:
+	sun_color = planet_color
+	mer_color = planet_color
+	ven_color = planet_color
+	ear_color = planet_color
+	mar_color = planet_color
+	ast_color = planet_color
+	jup_color = planet_color
+	sat_color = planet_color
+	ura_color = planet_color
+	nep_color = planet_color
+
+planet_colors = [ mer_color, ven_color, ear_color, mar_color, jup_color, sat_color, ura_color, nep_color ]
+
+mer_orbit_color = mer_color
+ven_orbit_color = ven_color
+ear_orbit_color = ear_color
+mar_orbit_color = mar_color
+jup_orbit_color = jup_color
+sat_orbit_color = sat_color
+ura_orbit_color = ura_color
+nep_orbit_color = nep_color
 
 
 # Source for orbital parameters: JPL Horizons ephemerides
@@ -276,14 +314,14 @@ for i in range(len(r_vals)):
 if circles:
 	# Force planetary orbits to be circles, sized so that the planet's
 	#	current location falls along the circle.
-	mer_orbit = Circle((0.0,0.0), r_vals[0], edgecolor=orbit_color, fill=False)
-	ven_orbit = Circle((0.0,0.0), r_vals[1], edgecolor=orbit_color, fill=False)
-	ear_orbit = Circle((0.0,0.0), r_vals[2], edgecolor=orbit_color, fill=False)
-	mar_orbit = Circle((0.0,0.0), r_vals[3], edgecolor=orbit_color, fill=False)
-	jup_orbit = Circle((0.0,0.0), r_vals[4], edgecolor=orbit_color, fill=False)
-	sat_orbit = Circle((0.0,0.0), r_vals[5], edgecolor=orbit_color, fill=False)
-	ura_orbit = Circle((0.0,0.0), r_vals[6], edgecolor=orbit_color, fill=False)
-	nep_orbit = Circle((0.0,0.0), r_vals[7], edgecolor=orbit_color, fill=False)
+	mer_orbit = Circle((0.0,0.0), r_vals[0], edgecolor=mer_orbit_color, fill=False)
+	ven_orbit = Circle((0.0,0.0), r_vals[1], edgecolor=ven_orbit_color, fill=False)
+	ear_orbit = Circle((0.0,0.0), r_vals[2], edgecolor=ear_orbit_color, fill=False)
+	mar_orbit = Circle((0.0,0.0), r_vals[3], edgecolor=mar_orbit_color, fill=False)
+	jup_orbit = Circle((0.0,0.0), r_vals[4], edgecolor=jup_orbit_color, fill=False)
+	sat_orbit = Circle((0.0,0.0), r_vals[5], edgecolor=sat_orbit_color, fill=False)
+	ura_orbit = Circle((0.0,0.0), r_vals[6], edgecolor=ura_orbit_color, fill=False)
+	nep_orbit = Circle((0.0,0.0), r_vals[7], edgecolor=nep_orbit_color, fill=False)
 
 
 # Make the figure
@@ -293,9 +331,9 @@ ax = fig.gca()
 # Make it square
 ax.set_aspect('equal')
 # Plot planets
-orrery = plt.scatter( x_vals , y_vals , color=planet_color, s=planet_size )
+orrery = plt.scatter( x_vals , y_vals , color=planet_colors, s=planet_size )
 # Plot asteroids
-asteroids = plt.scatter( x_ast , y_ast , color=planet_color, s=ast_size )
+asteroids = plt.scatter( x_ast , y_ast , color=ast_color, s=ast_size )
 
 if show_sun:
 	sun = plt.scatter( [0.0] , [0.0] , color=sun_color, s=sun_size )
@@ -361,14 +399,14 @@ if draw_orbits:
 			nep_ys[j] = nep_rs[j] * np.sin(phis[j])
 
 		# Add calculated orbital ellipses to the plot
-		mer_orbit = plt.plot( mer_xs, mer_ys, linewidth=orbit_thk, color=planet_color )
-		ven_orbit = plt.plot( ven_xs, ven_ys, linewidth=orbit_thk, color=planet_color )
-		ear_orbit = plt.plot( ear_xs, ear_ys, linewidth=orbit_thk, color=planet_color )
-		mar_orbit = plt.plot( mar_xs, mar_ys, linewidth=orbit_thk, color=planet_color )
-		jup_orbit = plt.plot( jup_xs, jup_ys, linewidth=orbit_thk, color=planet_color )
-		sat_orbit = plt.plot( sat_xs, sat_ys, linewidth=orbit_thk, color=planet_color )
-		ura_orbit = plt.plot( ura_xs, ura_ys, linewidth=orbit_thk, color=planet_color )
-		nep_orbit = plt.plot( nep_xs, nep_ys, linewidth=orbit_thk, color=planet_color )
+		mer_orbit = plt.plot( mer_xs, mer_ys, linewidth=orbit_thk, color=mer_orbit_color )
+		ven_orbit = plt.plot( ven_xs, ven_ys, linewidth=orbit_thk, color=ven_orbit_color )
+		ear_orbit = plt.plot( ear_xs, ear_ys, linewidth=orbit_thk, color=ear_orbit_color )
+		mar_orbit = plt.plot( mar_xs, mar_ys, linewidth=orbit_thk, color=mar_orbit_color )
+		jup_orbit = plt.plot( jup_xs, jup_ys, linewidth=orbit_thk, color=jup_orbit_color )
+		sat_orbit = plt.plot( sat_xs, sat_ys, linewidth=orbit_thk, color=sat_orbit_color )
+		ura_orbit = plt.plot( ura_xs, ura_ys, linewidth=orbit_thk, color=ura_orbit_color )
+		nep_orbit = plt.plot( nep_xs, nep_ys, linewidth=orbit_thk, color=nep_orbit_color )
 
 # Set axes to show everything
 ax.set_xlim(-r_vals[7]*1.1, r_vals[7]*1.1)
