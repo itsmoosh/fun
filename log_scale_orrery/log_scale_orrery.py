@@ -31,7 +31,6 @@ from matplotlib.patches import Circle, Ellipse
 ###########################
 
 date = '2000/01/01'
-#date = '2000/01/01'
 #date = '2012/07/21'	# Day Marshall married Nichole
 #date = '2009/05/22'	# Day Marshall met Nichole
 day_we_met = False	# Only used if pyephem is not installed
