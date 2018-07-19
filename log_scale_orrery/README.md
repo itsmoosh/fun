@@ -8,7 +8,7 @@ This program was created to make a radial-log-scale orrery (planet
 	or comments to itsmoosh@gmail.com.
 
 Prerequisites:
-	Python 3
+	Python 3,
 	PyEphem ('ephem' module)
 
 	Information about PyEphem can be found at: http://rhodesmill.org/pyephem/
